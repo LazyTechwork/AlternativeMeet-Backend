@@ -12,6 +12,12 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+    /**
+     * Search processor
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse|object
+     */
     public function search(Request $request)
     {
         $validator = validator($request->all(), [
@@ -37,7 +43,8 @@ class UserController extends Controller
             ->whereBetween('birthday', [$minbirth, $maxbirth])->get(); // Getting all users
 
         $users = $users->filter(function (User $user) use ($distance, $cu) { // Filtering by distance
-            return $user->distance($cu->geo) <= $distance;
+            $user->setAttribute('calculatedDistance', $user->distance($cu->geo));
+            return $user->getAttribute('calculatedDistance') <= $distance;
         });
 
         return response()->json(UserResource::collection($users))->setStatusCode(200); // Sending response

@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Helpers\GlobalUtils;
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -39,6 +40,9 @@ use Illuminate\Notifications\Notifiable;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereVkId($value)
  * @mixin \Eloquent
+ * @property-read mixed $age
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\User[] $sympathised
+ * @property-read int|null $sympathised_count
  */
 class User extends Authenticatable
 {
@@ -67,5 +71,15 @@ class User extends Authenticatable
     public function distance($geo)
     {
         return GlobalUtils::geoDistance($this->geo, $geo);
+    }
+
+    /**
+     * Returns age
+     *
+     * @return int
+     */
+    public function getAgeAttribute()
+    {
+        return Carbon::now()->diffInYears($this->birthday);
     }
 }

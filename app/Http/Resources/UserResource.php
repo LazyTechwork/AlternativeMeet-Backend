@@ -14,14 +14,19 @@ class UserResource extends JsonResource
      */
     public function toArray($request)
     {
-        return [
+        $response = [
             'firstname' => $this->firstname,
             'lastname' => $this->lastname,
+            'name' => $this->firstname . ' ' . $this->lastname,
             'description' => $this->description,
-            'geo' => $this->geo,
-            'birthday' => $this->birthday,
+            'age' => $this->age,
             'sex' => $this->sex,
-            'avatar' => $this->avatar
+            'img_url' => $this->avatar
         ];
+
+        if ($this->getAttribute('calculatedDistance'))
+            $response['distance'] = $this->getAttribute('calculatedDistance'); // If has calculated distance -> adding to JSON
+
+        return $response;
     }
 }
