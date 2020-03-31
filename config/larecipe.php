@@ -145,7 +145,7 @@ return [
     */
 
     'seo'                 => [
-        'author'          => '',
+        'author'          => 'LazyTechwork',
         'description'     => '',
         'keywords'        => '',
         'og'              => [
