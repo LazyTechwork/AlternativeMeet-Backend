@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Rules\AgeRule;
+use App\Rules\DistanceRule;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -12,11 +13,13 @@ class UserController extends Controller
         $validator = validator($request->all(), [
             'from_age' => ['required', new AgeRule()],
             'to_age' => ['required', 'gt:from_age', new AgeRule()],
-            'distance' => ['required', 'integer'],
+            'distance' => ['required', new DistanceRule()],
             'sex' => ['required', 'in:0,1,2']
         ]);
 
         if ($validator->fails())
             return response()->json(['status' => 'error', 'messages' => $validator->getMessageBag()->all()])->setStatusCode(400);
+
+
     }
 }

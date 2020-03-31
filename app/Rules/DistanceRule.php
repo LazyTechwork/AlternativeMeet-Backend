@@ -36,6 +36,6 @@ class DistanceRule implements Rule
      */
     public function message()
     {
-        return 'Дистанция не может быть больше R*PI';
+        return 'Расстояние не может быть больше R*PI';
     }
 }

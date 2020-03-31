@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Helpers\GlobalUtils;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -51,8 +52,8 @@ class User extends Authenticatable
         return $this->belongsToMany(User::class, 'sympathy', 'to', 'id');
     }
 
-    public function get()
+    public function distance($geo)
     {
-        
+        return GlobalUtils::geoDistance($this->geo, $geo);
     }
 }
