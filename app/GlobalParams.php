@@ -15,4 +15,14 @@ class GlobalParams
      * Maximum age
      */
     public const MAX_AGE = 87;
+
+    /*
+     * Earth radius (km)
+     */
+    public const EARTH_RADIUS = 6378;
+
+    /*
+     * Mathematical PI
+     */
+    public const PI = 3.141592;
 }
