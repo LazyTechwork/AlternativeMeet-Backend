@@ -14,9 +14,9 @@ class CreateSympathyTable extends Migration
     public function up()
     {
         Schema::create('sympathy', function (Blueprint $table) {
-            $table->foreignId('from');
-            $table->foreignId('to');
-            $table->tinyInteger('status')->default(0);
+            $table->foreignId('from')->comment('Симпатия от');
+            $table->foreignId('to')->comment('Симпатия к');
+            $table->tinyInteger('status')->default(0)->comment('Статус симпатии');
 
 //            Foreign keys
             $table->foreign('from')->references('id')->on('users');
