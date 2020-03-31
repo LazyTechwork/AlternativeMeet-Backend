@@ -18,7 +18,8 @@ class CreateLogsTable extends Migration
             $table->foreignId('user_id')->comment('Пользователь');
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('action_type')->comment('Тип действия');
-            $table->string('description');
+            $table->string('description')->comment('Описание действия');
+            $table->json('user_state')->comment('Текущее состояние пользователя');
             $table->timestamps();
         });
     }
