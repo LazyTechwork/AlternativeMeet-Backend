@@ -14,6 +14,7 @@ class UserResource extends JsonResource
      */
     public function toArray($request)
     {
+        $tag = $this->tag;
         $response = [
             'firstname' => $this->firstname,
             'lastname' => $this->lastname,
@@ -21,7 +22,11 @@ class UserResource extends JsonResource
             'description' => $this->description,
             'age' => $this->age,
             'sex' => $this->sex,
-            'img_url' => $this->avatar
+            'img_url' => $this->avatar,
+            'tag' => [
+                'name' => $tag->name,
+                'description' => $tag->description
+            ]
         ];
 
         if ($this->getAttribute('calculatedDistance'))
