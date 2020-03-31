@@ -25,4 +25,9 @@ class GlobalParams
      * Mathematical PI
      */
     public const PI = 3.141592;
+
+    public const ACTION_USER_CREATE = 'user_create';
+    public const ACTION_PHOTO_CHANGE = 'photo_change';
+    public const ACTION_DESCRIPTION_CHANGE = 'description_change';
+
 }
