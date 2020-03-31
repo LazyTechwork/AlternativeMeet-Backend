@@ -36,6 +36,8 @@ class AgeRule implements Rule
      */
     public function message()
     {
-        return 'The validation error message.';
+        $min = GlobalParams::MIN_AGE;
+        $max = GlobalParams::MAX_AGE;
+        return "Неправильно указан возраст ($min-$max лет)";
     }
 }
