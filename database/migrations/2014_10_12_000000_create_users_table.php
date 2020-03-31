@@ -17,25 +17,25 @@ class CreateUsersTable extends Migration
             $table->id();
 
 //            Profile info
-            $table->string('firstname');
-            $table->string('lastname');
-            $table->text('description')->nullable();
-            $table->date('birthday')->nullable();
-            $table->unsignedTinyInteger('sex')->default(0);
+            $table->string('firstname')->comment('Имя');
+            $table->string('lastname')->comment('Фамилия');
+            $table->text('description')->nullable()->comment('Описание профиля');
+            $table->date('birthday')->nullable()->comment('Дата рождения');
+            $table->unsignedTinyInteger('sex')->default(0)->comment('Пол');
 
 //            Additional info
-            $table->json('social')->nullable();
-            $table->json('geo')->nullable();
-            $table->string('avatar')->nullable();
+            $table->json('social')->nullable()->comment('Объект соц сетей');
+            $table->json('geo')->nullable()->comment('Геопозиция (lat, long)');
+            $table->string('photo')->nullable()->comment('Ссылка на фото профиля');
 
 //            Interests
-            $table->smallInteger('agefrom');
-            $table->smallInteger('ageto');
-            $table->foreignId('tag_id');
+            $table->smallInteger('agefrom')->comment('Интересы: нижний возраст');
+            $table->smallInteger('ageto')->comment('Интересы: верхний возраст');
+            $table->foreignId('tag_id')->comment('Интересы: тег');
 
 //            Technical info
-            $table->unsignedBigInteger('vk_id');
-            $table->string('vk_token');
+            $table->unsignedBigInteger('vk_id')->comment('ID пользователя ВКонтакте');
+            $table->string('vk_token')->comment('Хеш-токен');
             $table->timestamps();
         });
     }
