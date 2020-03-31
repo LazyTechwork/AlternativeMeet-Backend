@@ -1,0 +1,6 @@
+- ## Начало использования
+    - [Использование API](/{{route}}/{{version}}/overview)
+- ## Методы
+    - [Поиск пользователей](/{{route}}/{{version}}/methods/user/search)
+- ## Объекты
+    - [Пользователь](/{{route}}/{{version}}/objects/user)

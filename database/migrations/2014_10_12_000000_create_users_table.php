@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration
             $table->json('social')->nullable();
             $table->string('avatar')->nullable();
             $table->unsignedTinyInteger('sex')->default(0);
+            $table->string('vk_token');
             $table->timestamps();
         });
     }
