@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->date('birthday')->nullable();
             $table->json('social')->nullable();
             $table->string('avatar')->nullable();
-            $table->unsignedInteger('sex')->default(0);
+            $table->unsignedTinyInteger('sex')->default(0);
             $table->timestamps();
         });
     }
