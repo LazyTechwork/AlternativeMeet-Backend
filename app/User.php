@@ -47,11 +47,23 @@ class User extends Authenticatable
     protected $guarded = [];
     protected $dates = ['birthday'];
 
+    /**
+     * Returns all users that liked this user
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function sympathised()
     {
-        return $this->belongsToMany(User::class, 'sympathy', 'to', 'id');
+        return $this->belongsToMany(User::class, 'sympathy', 'to', 'id')
+            ->where('status', '>', 0);
     }
 
+    /**
+     * Get distance between one geo point and geo point of this user
+     *
+     * @param $geo
+     * @return float|int
+     */
     public function distance($geo)
     {
         return GlobalUtils::geoDistance($this->geo, $geo);
