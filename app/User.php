@@ -43,6 +43,17 @@ use Illuminate\Notifications\Notifiable;
  * @property-read mixed $age
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\User[] $sympathised
  * @property-read int|null $sympathised_count
+ * @property string|null $photo Ссылка на фото профиля
+ * @property int $agefrom Интересы: нижний возраст
+ * @property int $ageto Интересы: верхний возраст
+ * @property int $tag_id Интересы: тег
+ * @property string $vk_token Хеш-токен
+ * @property-read \App\Tag $tag
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereAgefrom($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereAgeto($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User wherePhoto($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereTagId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereVkToken($value)
  */
 class User extends Authenticatable
 {
