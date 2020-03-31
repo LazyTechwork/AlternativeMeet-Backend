@@ -82,4 +82,14 @@ class User extends Authenticatable
     {
         return Carbon::now()->diffInYears($this->birthday);
     }
+
+    /**
+     * Relationship to Tag
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function tag()
+    {
+        return $this->belongsTo(Tag::class, 'tag_id', 'id');
+    }
 }
