@@ -15,15 +15,26 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('vk_id');
+
+//            Profile info
             $table->string('firstname');
             $table->string('lastname');
             $table->text('description')->nullable();
-            $table->json('geo')->nullable();
             $table->date('birthday')->nullable();
-            $table->json('social')->nullable();
-            $table->string('avatar')->nullable();
             $table->unsignedTinyInteger('sex')->default(0);
+
+//            Additional info
+            $table->json('social')->nullable();
+            $table->json('geo')->nullable();
+            $table->string('avatar')->nullable();
+
+//            Interests
+            $table->smallInteger('agefrom');
+            $table->smallInteger('ageto');
+            $table->foreignId('tag_id');
+
+//            Technical info
+            $table->unsignedBigInteger('vk_id');
             $table->string('vk_token');
             $table->timestamps();
         });
