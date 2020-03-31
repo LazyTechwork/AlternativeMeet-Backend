@@ -46,8 +46,13 @@ class User extends Authenticatable
     protected $guarded = [];
     protected $dates = ['birthday'];
 
-    public function sympathied()
+    public function sympathised()
     {
         return $this->belongsToMany(User::class, 'sympathy', 'to', 'id');
+    }
+
+    public function get()
+    {
+        
     }
 }
