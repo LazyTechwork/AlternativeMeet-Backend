@@ -3,7 +3,7 @@
 
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 7.4.0 on 2020-03-31 18:47:31.
+ * Generated for Laravel 7.4.0 on 2020-03-31 22:11:16.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -15121,6 +15121,18 @@ namespace Illuminate\Support {
  
 }
 
+namespace BinaryTorch\LaRecipe { 
+
+    /**
+     * 
+     *
+     */ 
+    class LaRecipe {
+         
+    }
+ 
+}
+
 namespace Facade\Ignition\Facades { 
 
     /**
@@ -18306,6 +18318,8 @@ namespace  {
     class Validator extends \Illuminate\Support\Facades\Validator {}
 
     class View extends \Illuminate\Support\Facades\View {}
+
+    class LaRecipe extends \BinaryTorch\LaRecipe\LaRecipe {}
 
     class Flare extends \Facade\Ignition\Facades\Flare {}
  
