@@ -55,4 +55,13 @@ class UserController extends Controller
             'count' => $users->count()
         ])->setStatusCode(200); // Sending response
     }
+
+    public function register(Request $request)
+    {
+        $validator = validator($request->all(), [
+            'vk_id' => ['required', 'integer', 'exists:users,vk_id'],
+            'firstname' => ['required', 'string', 'max:255', 'regex:/^[a-zA-Zа-яА-Я]+$/gm'],
+            ''
+        ]);
+    }
 }
