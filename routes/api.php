@@ -21,7 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('authorize', 'AuthorizationController@authorize');
 
 Route::middleware('vkauth')->group(function () {
-    Route::get('register', 'AuthorizationController@register');
+    Route::post('register', 'AuthorizationController@register');
 });
 
 Route::prefix('users')->group(function () {
