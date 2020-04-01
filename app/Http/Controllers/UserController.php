@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\GlobalUtils;
 use App\Http\Resources\UserResource;
 use App\Rules\AgeRule;
 use App\Rules\DistanceRule;
+use App\Rules\NameRule;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -29,7 +31,7 @@ class UserController extends Controller
         ]);
 
         if ($validator->fails())
-            return response()->json(['status' => 'error', 'messages' => $validator->getMessageBag()->all()])->setStatusCode(400);
+            return GlobalUtils::validatiorErrorResponse($validator);
 
         $cu = User::whereVkId($request->get('user'))->first();
         Auth::loginUsingId($cu->id);
@@ -58,10 +60,47 @@ class UserController extends Controller
 
     public function register(Request $request)
     {
+        $user = Auth::user();
+        if ($user->firstname !== null || $user->lastname !== null ||
+            $user->sex !== null || $user->birthday !== null ||
+            $user->geo !== null || $user->agefrom !== null || $user->ageto !== null)
+            return response()->json([
+                'status' => 'error',
+                'messages' => ['Данный пользователь уже зарегистрирован'],
+                'user' => UserResource::make($user)
+            ])->setStatusCode(403);
+
         $validator = validator($request->all(), [
             'vk_id' => ['required', 'integer', 'exists:users,vk_id'],
-            'firstname' => ['required', 'string', 'max:255', 'regex:/^[a-zA-Zа-яА-Я]+$/gm'],
-            ''
+            'firstname' => ['required', 'string', 'max:255', new NameRule()],
+            'lastname' => ['required', 'string', 'max:255', new NameRule()],
+            'birthday' => ['required', 'date_format:d.m.Y'],
+            'sex' => ['required', 'in:0,1,2'],
+            'geo_lat' => ['required', 'numeric'],
+            'geo_long' => ['required', 'numeric'],
+            'agefrom' => ['required', new AgeRule()],
+            'ageto' => ['required', new AgeRule()]
         ]);
+
+        if ($validator->fails())
+            return GlobalUtils::validatiorErrorResponse($validator);
+
+        if ($user->vk_id !== $request->get('vk_id'))
+            return response()
+                ->json(['status' => 'error', 'messages' => ['Данные авторизации не совпадают с переданными данными']])
+                ->setStatusCode(400);
+
+        $user->update([
+            'vk_id' => $request->get('vk_id'),
+            'firstname' => $request->get('firstname'),
+            'lastname' => $request->get('lastname'),
+            'birthday' => Carbon::createFromFormat('d.m.Y', $request->get('birthday')),
+            'sex' => $request->get('sex'),
+            'geo' => [$request->get('geo_lat'), $request->get('geo_long')],
+            'agefrom' => $request->get('agefrom'),
+            'ageto' => $request->get('ageto')
+        ]);
+
+        return response()->json(['status' => 'ok', 'user' => UserResource::make($user)]);
     }
 }
