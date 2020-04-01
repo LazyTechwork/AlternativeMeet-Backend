@@ -1,7 +1,9 @@
-- ## Начало использования
+- ## Общая информация
     - [Использование API](/{{route}}/{{version}}/overview)
-- ## Методы
-    - [Авторизация пользователя](/{{route}}/{{version}}/methods/authorization)
-    - [Поиск пользователей](/{{route}}/{{version}}/methods/user/search)
+    - [Авторизация в API](/{{route}}/{{version}}/apiauth)
+- ## Методы взаимодействия с пользователем
+    - [Авторизация](/{{route}}/{{version}}/methods/authorization)
+    - [Регистрация](/{{route}}/{{version}}/methods/registration)
+    - [Поиск](/{{route}}/{{version}}/methods/user/search)
 - ## Объекты
     - [Пользователь](/{{route}}/{{version}}/objects/user)
