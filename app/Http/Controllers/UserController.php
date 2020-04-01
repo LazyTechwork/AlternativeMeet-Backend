@@ -47,6 +47,12 @@ class UserController extends Controller
             return $user->getAttribute('calculatedDistance') <= $distance;
         });
 
-        return response()->json(UserResource::collection($users))->setStatusCode(200); // Sending response
+        $users = $users->shuffle();
+
+        return response()->json([
+            'status' => 'ok',
+            'users' => UserResource::collection($users),
+            'count' => $users->count()
+        ])->setStatusCode(200); // Sending response
     }
 }
