@@ -27,3 +27,7 @@ Route::middleware('vkauth')->group(function () {
 Route::prefix('users')->group(function () {
     Route::get('search', 'UserController@search');
 });
+
+Route::prefix('tags')->group(function () {
+    Route::get('tags', 'TagsController@index');
+});
