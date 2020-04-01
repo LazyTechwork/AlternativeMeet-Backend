@@ -12,7 +12,7 @@ class AuthorizationController extends Controller
     {
         $user = User::whereVkId($request->get('vk_user_id'))->first(); // Searching user with VK User ID
         if ($user->exists() && $user->vk_token === $request->get('sign'))
-            return response()->json(['status' => 'ok', 'user' => UserResource::make($user)])->setStatusCode(200);
+            return response()->json(['status' => 'ok', 'registered' => true, 'user' => UserResource::make($user)])->setStatusCode(200);
 
         $query_params = $request->all();
         $sign_params = [];
@@ -36,11 +36,15 @@ class AuthorizationController extends Controller
                 'messages' => ['Хеш не прошёл проверку на валидность']
             ])->setStatusCode(400);
 
-        if ($user->exists())
+        if ($user->exists()) {
             $user->update(['vk_token' => $sign]); // Updating VK Token in DB
-        else {
-
+            return response()->json(['status' => 'ok', 'registered' => true, 'user' => UserResource::make($user)])->setStatusCode(200);
+        } else {
+            $user = User::create([
+                'vk_id' => $request->get('vk_user_id'),
+                'vk_token' => $sign
+            ]);
+            return response()->json(['status' => 'ok', 'registered' => false, 'user' => UserResource::make($user)])->setStatusCode(200);
         }
-
     }
 }
