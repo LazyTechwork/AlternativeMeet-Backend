@@ -18,6 +18,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('authorize', 'AuthorizationController@authorize');
+
 Route::prefix('users')->group(function () {
     Route::get('search', 'UserController@search');
 });
