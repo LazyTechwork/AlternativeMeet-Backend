@@ -25,7 +25,7 @@ class NameRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        return preg_match("/^[А-Яа-я]+$/gm", $value);
+        return preg_match("/^[a-zA-ZА-Яа-я]+$/gm", $value);
     }
 
     /**
