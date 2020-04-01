@@ -17,8 +17,8 @@ class CreateUsersTable extends Migration
             $table->id();
 
 //            Profile info
-            $table->string('firstname')->comment('Имя');
-            $table->string('lastname')->comment('Фамилия');
+            $table->string('firstname')->nullable()->comment('Имя');
+            $table->string('lastname')->nullable()->comment('Фамилия');
             $table->text('description')->nullable()->comment('Описание профиля');
             $table->date('birthday')->nullable()->comment('Дата рождения');
             $table->unsignedTinyInteger('sex')->default(0)->comment('Пол');
@@ -29,13 +29,13 @@ class CreateUsersTable extends Migration
             $table->string('photo')->nullable()->comment('Ссылка на фото профиля');
 
 //            Interests
-            $table->smallInteger('agefrom')->comment('Интересы: нижний возраст');
-            $table->smallInteger('ageto')->comment('Интересы: верхний возраст');
-            $table->foreignId('tag_id')->comment('Интересы: тег');
+            $table->smallInteger('agefrom')->nullable()->comment('Интересы: нижний возраст');
+            $table->smallInteger('ageto')->nullable()->comment('Интересы: верхний возраст');
+            $table->foreignId('tag_id')->nullable()->comment('Интересы: тег');
 
 //            Technical info
             $table->unsignedBigInteger('vk_id')->comment('ID пользователя ВКонтакте');
-            $table->string('vk_token')->comment('Хеш-токен');
+            $table->string('vk_token')->nullable()->comment('Хеш-токен');
             $table->timestamps();
         });
     }
