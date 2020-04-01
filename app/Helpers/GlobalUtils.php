@@ -5,6 +5,7 @@ namespace App\Helpers;
 
 
 use App\GlobalParams;
+use Illuminate\Contracts\Validation\Validator;
 
 class GlobalUtils
 {
@@ -30,5 +31,10 @@ class GlobalUtils
 
         $angle = atan2(sqrt($a), $b);
         return $angle * GlobalParams::EARTH_RADIUS;
+    }
+
+    public static function validatiorErrorResponse(Validator $validator)
+    {
+        return response()->json(['status' => 'error', 'messages' => $validator->getMessageBag()->all()])->setStatusCode(400);
     }
 }
