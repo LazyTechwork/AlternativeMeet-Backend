@@ -61,9 +61,7 @@ class UserController extends Controller
     public function register(Request $request)
     {
         $user = Auth::user();
-        if ($user && $user->firstname !== null && $user->lastname !== null &&
-            $user->sex !== null && $user->birthday !== null &&
-            $user->geo !== null && $user->agefrom !== null && $user->ageto !== null)
+        if ($user && $user->isRegistered())
             return response()->json([
                 'status' => 'error',
                 'messages' => ['Данный пользователь уже зарегистрирован'],

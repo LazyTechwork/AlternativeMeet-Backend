@@ -12,7 +12,10 @@ class AuthorizationController extends Controller
     {
         $user = User::whereVkId($request->get('vk_user_id'))->first(); // Searching user with VK User ID
         if ($user && $user->vk_token === $request->get('sign'))
-            return response()->json(['status' => 'ok', 'registered' => true, 'user' => UserResource::make($user)])->setStatusCode(200);
+            if ($user->isRegistered())
+                return response()->json(['status' => 'ok', 'registered' => true, 'user' => UserResource::make($user)])->setStatusCode(200);
+            else
+                return response()->json(['status' => 'ok', 'registered' => false, 'user' => UserResource::make($user)])->setStatusCode(200);
 
         $query_params = $request->all();
         $sign_params = [];

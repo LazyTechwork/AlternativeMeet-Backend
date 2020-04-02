@@ -109,5 +109,12 @@ class User extends Authenticatable
         return $this->attributes;
     }
 
+    public function isRegistered()
+    {
+        return $this->firstname !== null && $this->lastname !== null &&
+            $this->sex !== null && $this->birthday !== null &&
+            $this->geo !== null && $this->agefrom !== null && $this->ageto !== null;
+    }
+
 
 }
