@@ -103,4 +103,11 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Tag::class, 'tag_id', 'id');
     }
+
+    public function toArray()
+    {
+        return $this->attributes;
+    }
+
+
 }

@@ -23,7 +23,7 @@ class Log extends Model
             'user_id' => $user->id,
             'action_type' => $action_type,
             'description' => $description,
-            'user_state' => $user
+            'user_state' => $user->toArray()
         ]);
     }
 }
