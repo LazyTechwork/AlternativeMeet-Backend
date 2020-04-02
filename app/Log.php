@@ -18,11 +18,12 @@ class Log extends Model
 
     public static function register(User $user, string $action_type, string $description)
     {
+        $user = $user->fresh();
         Log::create([
             'user_id' => $user->id,
             'action_type' => $action_type,
             'description' => $description,
-            'user_state' => $user->toArray()
+            'user_state' => $user
         ]);
     }
 }
