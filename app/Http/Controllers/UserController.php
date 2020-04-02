@@ -61,7 +61,7 @@ class UserController extends Controller
     public function register(Request $request)
     {
         $user = Auth::user();
-        if ($user->firstname !== null && $user->lastname !== null &&
+        if ($user && $user->firstname !== null && $user->lastname !== null &&
             $user->sex !== null && $user->birthday !== null &&
             $user->geo !== null && $user->agefrom !== null && $user->ageto !== null)
             return response()->json([

@@ -8,10 +8,10 @@ use Illuminate\Http\Request;
 
 class AuthorizationController extends Controller
 {
-    public function authorize(Request $request)
+    public function authorization(Request $request)
     {
         $user = User::whereVkId($request->get('vk_user_id'))->first(); // Searching user with VK User ID
-        if ($user->exists() && $user->vk_token === $request->get('sign'))
+        if ($user && $user->vk_token === $request->get('sign'))
             return response()->json(['status' => 'ok', 'registered' => true, 'user' => UserResource::make($user)])->setStatusCode(200);
 
         $query_params = $request->all();
@@ -36,7 +36,7 @@ class AuthorizationController extends Controller
                 'messages' => ['Хеш не прошёл проверку на валидность']
             ])->setStatusCode(400);
 
-        if ($user->exists()) {
+        if ($user) {
             $user->update(['vk_token' => $sign]); // Updating VK Token in DB
             return response()->json(['status' => 'ok', 'registered' => true, 'user' => UserResource::make($user)])->setStatusCode(200);
         } else {

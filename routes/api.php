@@ -18,7 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('authorize', 'AuthorizationController@authorize');
+Route::get('authorize', 'AuthorizationController@authorization');
 
 Route::middleware('vkauth')->group(function () {
     Route::post('register', 'AuthorizationController@register');
