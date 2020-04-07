@@ -12,6 +12,7 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use VK\Client\VKApiClient;
 
 class UserController extends Controller
 {
@@ -124,5 +125,34 @@ class UserController extends Controller
                 ->json(['status' => 'error', 'messages' => ['Невозможно сменить описание. Задержка между сменами описания - ' . GlobalParams::AVATAR_CHANGE_DELAY . '.']])
                 ->setStatusCode(422);
 
+    }
+
+    public function updateAvatar(Request $request)
+    {
+        $validator = validator($request->all(), [
+            'avatar' => ['required', 'image', 'max:5000']
+        ]);
+
+        if ($validator->fails())
+            return GlobalUtils::validatiorErrorResponse($validator);
+
+        $avatar = $request->file('avatar');
+
+        $vk = new VKApiClient('5.103');
+        $token = env('VK_PHOTOGROUP_TOKEN');
+
+        try {
+            $upload_server = $vk->photos()->getMessagesUploadServer($token, ['peer_id' => 1]); // Get upload server
+            $photo = $vk->getRequest()->upload($upload_server, 'photo', $avatar->getRealPath()); // Uploading photo
+            $photo = $vk->photos()->saveMessagesPhoto($token, [ // Saving photo and getting result
+                'server' => $photo['server'],
+                'photo' => $photo['photo'],
+                'hash' => $photo['hash'],
+            ]);
+            return response()->json(['status' => 'ok', 'item' => $photo])->setStatusCode(200); // Returning photo object
+        } catch (\Exception $exception) {
+            return response()
+                ->json(['status' => 'error', 'messages' => [$exception->getMessage()]])->setStatusCode(422); // If one of methods failed - throwing error response
+        }
     }
 }

@@ -22,6 +22,10 @@ Route::get('authorize', 'AuthorizationController@authorization');
 
 Route::middleware('vkauth')->group(function () {
     Route::post('register', 'AuthorizationController@register');
+
+    Route::prefix('account')->group(function () {
+        Route::post('description', 'UserController@updateDescription');
+    });
 });
 
 Route::prefix('users')->group(function () {
