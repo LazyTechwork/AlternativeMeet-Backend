@@ -20,14 +20,19 @@ class UserObserver
     }
 
     /**
-     * Handle the user "updated" event.
+     * Handle the user "updating" event.
      *
      * @param \App\User $user
      * @return void
      */
-    public function updated(User $user)
+    public function updating(User $user)
     {
-        //
+        if ($user->isDirty('description')) {
+            Log::register($user, GlobalParams::ACTION_DESCRIPTION_CHANGE, 'Обновлено описание пользователя');
+        }
+        if ($user->isDirty('photo')) {
+            Log::register($user, GlobalParams::ACTION_PHOTO_CHANGE, 'Обновлено фото профиля');
+        }
     }
 
     /**
