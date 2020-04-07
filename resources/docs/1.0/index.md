@@ -4,6 +4,10 @@
 - ## Методы взаимодействия с пользователем
     - [Авторизация](/{{route}}/{{version}}/methods/authorization)
     - [Регистрация](/{{route}}/{{version}}/methods/registration)
+    - [Обновление описания](/{{route}}/{{version}}/methods/account/description)
+    - [Обновление фотографии](/{{route}}/{{version}}/methods/account/photo)
+    - [Обновление информации](/{{route}}/{{version}}/methods/account/update)
+    - [Регистрация](/{{route}}/{{version}}/methods/registration)
     - [Поиск](/{{route}}/{{version}}/methods/users/search)
 - ## Методы взаимодействия с тегами
     - [Получение списка тегов](/{{route}}/{{version}}/methods/tags/get)
