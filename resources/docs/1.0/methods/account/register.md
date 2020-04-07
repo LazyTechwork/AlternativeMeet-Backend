@@ -1,7 +1,7 @@
 # Регистрация пользователей
 Метод: `POST`
 
-URL: `/api/register`
+URL: `/api/account/register`
 
 Требуется [API-авторизация](/{{route}}/{{version}}/apiauth "Авторизация внутри API").
 
