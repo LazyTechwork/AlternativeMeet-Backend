@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('authorize', 'AuthorizationController@authorization');
-Route::post('update', 'UserController@updateInfo');
 
 Route::middleware('vkauth')->group(function () {
 
@@ -23,6 +22,7 @@ Route::middleware('vkauth')->group(function () {
         Route::post('register', 'AuthorizationController@register');
         Route::post('description', 'UserController@updateDescription');
         Route::post('photo', 'UserController@updatePhoto');
+        Route::post('update', 'UserController@updateInfo');
     });
 });
 
