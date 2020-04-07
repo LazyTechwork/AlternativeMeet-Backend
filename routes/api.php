@@ -25,7 +25,7 @@ Route::middleware('vkauth')->group(function () {
     Route::prefix('account')->group(function () {
         Route::post('register', 'AuthorizationController@register');
         Route::post('description', 'UserController@updateDescription');
-        Route::post('avatar', 'UserController@updateAvatar');
+        Route::post('photo', 'UserController@updatePhoto');
     });
 });
 

@@ -122,24 +122,31 @@ class UserController extends Controller
                 ->json(['status' => 'ok', 'user' => $user])->setStatusCode(200);
         } else
             return response()
-                ->json(['status' => 'error', 'messages' => ['Невозможно сменить описание. Задержка между сменами описания - ' . GlobalParams::AVATAR_CHANGE_DELAY . '.']])
+                ->json(['status' => 'error', 'messages' => ['Невозможно сменить описание. Задержка между сменами описания - ' . GlobalParams::DESCRIPTION_CHANGE_DELAY . '.']])
                 ->setStatusCode(422);
 
     }
 
-    public function updateAvatar(Request $request)
+    public function updatePhoto(Request $request)
     {
         $validator = validator($request->all(), [
-            'avatar' => ['required', 'image', 'max:5000']
+            'photo' => ['required', 'image', 'max:5000']
         ]);
 
         if ($validator->fails())
             return GlobalUtils::validatiorErrorResponse($validator);
 
-        $avatar = $request->file('avatar');
+        $avatar = $request->file('photo');
 
         $vk = new VKApiClient('5.103');
         $token = env('VK_PHOTOGROUP_TOKEN');
+
+        $user = Auth::user();
+
+        if (!$user->canChangeAvatar())
+            return response()
+                ->json(['status' => 'error', 'messages' => ['Невозможно сменить фото профиля. Задержка между сменами фото профиля - ' . GlobalParams::AVATAR_CHANGE_DELAY . '.']])
+                ->setStatusCode(422);
 
         try {
             $upload_server = $vk->photos()->getMessagesUploadServer($token, ['peer_id' => 1]); // Get upload server
