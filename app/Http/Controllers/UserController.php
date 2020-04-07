@@ -90,8 +90,8 @@ class UserController extends Controller
 
         $user->update([
             'vk_id' => $request->get('vk_id'),
-            'firstname' => $request->get('firstname'),
-            'lastname' => $request->get('lastname'),
+            'firstname' => e($request->get('firstname')),
+            'lastname' => e($request->get('lastname')),
             'birthday' => Carbon::createFromFormat('d.m.Y', $request->get('birthday')),
             'sex' => $request->get('sex'),
             'geo' => [$request->get('geo_lat'), $request->get('geo_long')],
@@ -100,5 +100,18 @@ class UserController extends Controller
         ]);
 
         return response()->json(['status' => 'ok', 'user' => UserResource::make($user)]);
+    }
+
+    public function updateDescription(Request $request)
+    {
+        $validator = validator($request->all(), [
+            'description' => ['required', 'string', 'max:1000']
+        ]);
+
+        if ($validator->fails())
+            return GlobalUtils::validatiorErrorResponse($validator);
+
+        $user = Auth::user();
+
     }
 }

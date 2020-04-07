@@ -30,4 +30,7 @@ class GlobalParams
     public const ACTION_PHOTO_CHANGE = 'photo_change';
     public const ACTION_DESCRIPTION_CHANGE = 'description_change';
 
+    public const DESCRIPTION_CHANGE_DELAY = 14; // Delay to change description in days
+    public const AVATAR_CHANGE_DELAY = 7; // Delay to change avatar in days
+
 }

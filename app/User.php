@@ -109,11 +109,48 @@ class User extends Authenticatable
         return $this->attributes;
     }
 
+    /**
+     * Is all user fields filled
+     *
+     * @return bool
+     */
     public function isRegistered()
     {
         return $this->firstname !== null && $this->lastname !== null &&
             $this->sex !== null && $this->birthday !== null &&
             $this->geo !== null && $this->agefrom !== null && $this->ageto !== null;
+    }
+
+    /**
+     * Can user change description (due to delay)
+     *
+     * @return bool
+     */
+    public function canChangeDescription()
+    {
+        $log = Log::whereUserId($this->id)->whereActionType(GlobalParams::ACTION_DESCRIPTION_CHANGE)->latest()->first();
+        if (!$log)
+            return true;
+        else if (Carbon::now()->diffInDays($log->created_at) >= GlobalParams::DESCRIPTION_CHANGE_DELAY)
+            return true;
+        else
+            return false;
+    }
+
+    /**
+     * Can user change avatar (due to delay)
+     *
+     * @return bool
+     */
+    public function canChangeAvatar()
+    {
+        $log = Log::whereUserId($this->id)->whereActionType(GlobalParams::ACTION_PHOTO_CHANGE)->latest()->first();
+        if (!$log)
+            return true;
+        else if (Carbon::now()->diffInDays($log->created_at) >= GlobalParams::AVATAR_CHANGE_DELAY)
+            return true;
+        else
+            return false;
     }
 
 
