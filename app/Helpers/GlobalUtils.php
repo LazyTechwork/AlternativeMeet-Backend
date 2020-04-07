@@ -35,6 +35,6 @@ class GlobalUtils
 
     public static function validatiorErrorResponse(Validator $validator)
     {
-        return response()->json(['status' => 'error', 'messages' => $validator->getMessageBag()->all()])->setStatusCode(400);
+        return response()->json(['status' => 'error', 'messages' => $validator->getMessageBag()->all()])->setStatusCode(422);
     }
 }
