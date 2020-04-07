@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\GlobalParams;
 use App\Helpers\GlobalUtils;
 use App\Http\Resources\UserResource;
 use App\Rules\AgeRule;
@@ -112,6 +113,16 @@ class UserController extends Controller
             return GlobalUtils::validatiorErrorResponse($validator);
 
         $user = Auth::user();
+
+        if ($user->canChangeDescription()) {
+            $user->update(['description' => e($request->get('description'))]);
+            $user = $user->fresh();
+            return response()
+                ->json(['status' => 'ok', 'user' => $user])->setStatusCode(200);
+        } else
+            return response()
+                ->json(['status' => 'error', 'messages' => ['Невозможно сменить описание. Задержка между сменами описания - ' . GlobalParams::AVATAR_CHANGE_DELAY . '.']])
+                ->setStatusCode(422);
 
     }
 }
