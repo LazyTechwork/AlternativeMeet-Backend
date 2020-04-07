@@ -14,11 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::get('authorize', 'AuthorizationController@authorization');
+Route::post('update', 'UserController@updateInfo');
 
 Route::middleware('vkauth')->group(function () {
 

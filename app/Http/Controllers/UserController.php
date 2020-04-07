@@ -96,7 +96,7 @@ class UserController extends Controller
             'lastname' => e($request->get('lastname')),
             'birthday' => Carbon::createFromFormat('d.m.Y', $request->get('birthday')),
             'sex' => $request->get('sex'),
-            'geo' => [$request->get('geo_lat'), $request->get('geo_long')],
+            'geo' => ['lat' => $request->get('geo_lat'), 'long' => $request->get('geo_long')],
             'agefrom' => $request->get('agefrom'),
             'ageto' => $request->get('ageto')
         ]);
@@ -161,5 +161,31 @@ class UserController extends Controller
             return response()
                 ->json(['status' => 'error', 'messages' => [$exception->getMessage()]])->setStatusCode(422); // If one of methods failed - throwing error response
         }
+    }
+
+    public function updateInfo(Request $request)
+    {
+        $validator = validator($request->all(), [
+            'firstname' => ['sometimes', 'string', 'max:255', new NameRule()],
+            'lastname' => ['sometimes', 'string', 'max:255', new NameRule()],
+            'birthday' => ['sometimes', 'date_format:d.m.Y'],
+            'sex' => ['sometimes', 'in:0,1,2'],
+            'geo_lat' => ['required_if:geo_lat', 'numeric'],
+            'geo_long' => ['required_if:geo_long', 'numeric'],
+            'agefrom' => ['sometimes', new AgeRule()],
+            'ageto' => ['sometimes', new AgeRule()]
+        ]);
+
+        if ($validator->fails())
+            return GlobalUtils::validatiorErrorResponse($validator);
+
+        $attributes = $request->only(['firstname', 'lastname', 'birthday', 'sex', 'geo_lat', 'geo_long', 'agefrom', 'ageto']);
+        if ($request->has('geo_lat') && $request->has('geo_long'))
+            $attributes['geo'] = ['lat' => $request->get('geo_lat'), 'long' => $request->get('geo_long')];
+
+        $user = Auth::user();
+        $user->update($attributes);
+
+        return response()->json(['status' => 'ok', 'user' => $user])->setStatusCode(200);
     }
 }
