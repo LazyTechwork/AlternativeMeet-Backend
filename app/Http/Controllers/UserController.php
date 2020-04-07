@@ -116,7 +116,7 @@ class UserController extends Controller
         $user = Auth::user();
 
         if ($user->canChangeDescription()) {
-            $user->update(['description' => e($request->get('description'))]);
+            $user->update(['description' => nl2br(e($request->get('description')))]);
             return response()
                 ->json(['status' => 'ok', 'user' => $user])->setStatusCode(200);
         } else
