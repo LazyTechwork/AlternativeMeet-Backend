@@ -3,7 +3,7 @@
     - [Авторизация в API](/{{route}}/{{version}}/apiauth)
 - ## Методы взаимодействия с пользователем
     - [Авторизация](/{{route}}/{{version}}/methods/authorization)
-    - [Регистрация](/{{route}}/{{version}}/methods/registration)
+    - [Регистрация](/{{route}}/{{version}}/methods/accoutn/register)
     - [Обновление описания](/{{route}}/{{version}}/methods/account/description)
     - [Обновление фотографии](/{{route}}/{{version}}/methods/account/photo)
     - [Обновление информации](/{{route}}/{{version}}/methods/account/update)
