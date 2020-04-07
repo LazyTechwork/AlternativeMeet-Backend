@@ -117,7 +117,6 @@ class UserController extends Controller
 
         if ($user->canChangeDescription()) {
             $user->update(['description' => e($request->get('description'))]);
-            $user = $user->fresh();
             return response()
                 ->json(['status' => 'ok', 'user' => $user])->setStatusCode(200);
         } else
@@ -156,7 +155,8 @@ class UserController extends Controller
                 'photo' => $photo['photo'],
                 'hash' => $photo['hash'],
             ]);
-            return response()->json(['status' => 'ok', 'item' => $photo])->setStatusCode(200); // Returning photo object
+            $user->update(['photo' => $photo]);
+            return response()->json(['status' => 'ok', 'user' => $user, 'photo' => $photo])->setStatusCode(200); // Returning photo object
         } catch (\Exception $exception) {
             return response()
                 ->json(['status' => 'error', 'messages' => [$exception->getMessage()]])->setStatusCode(422); // If one of methods failed - throwing error response
