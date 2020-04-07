@@ -26,7 +26,7 @@ class CreateUsersTable extends Migration
 //            Additional info
             $table->json('social')->nullable()->comment('Объект соц сетей');
             $table->json('geo')->nullable()->comment('Геопозиция (lat, long)');
-            $table->string('photo')->nullable()->comment('Ссылка на фото профиля');
+            $table->json('photo')->nullable()->comment('Фото профиля');
 
 //            Interests
             $table->smallInteger('agefrom')->nullable()->comment('Интересы: нижний возраст');
